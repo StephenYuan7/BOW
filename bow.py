@@ -49,4 +49,13 @@ word_count_idf = {}
 for key in word_count_dict:
     word_count_idf[key] = math.log10(len(corpus)/word_count_dict[key])
 print(word_count_idf)
+print('my_tfidf:')
 
+for x in corpus_split:
+    count_dict = {}
+    for key in x:
+        count_dict[key] = count_dict.get(key, 0) + 1
+    word_tfidf = {}
+    for key in count_dict:
+        word_tfidf[key] = count_dict[key] * word_count_idf[key]
+    print(word_tfidf)
