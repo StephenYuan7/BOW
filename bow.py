@@ -15,3 +15,17 @@ word_list = list(set(word_list))
 word_list.sort(key=word_list_temp.index)
 print(word_list)
 print(corpus_split)
+
+bow_list = [[0 for i in range(len(word_list))] for j in range(len(corpus))]
+print(bow_list)
+
+i = 0
+for x in word_list:
+    j = 0
+    for y in corpus_split:
+        for z in y:
+            if z == x:
+                bow_list[j][i] = bow_list[j][i] + 1
+        j = j + 1
+    i = i + 1
+print('final_result', bow_list)
