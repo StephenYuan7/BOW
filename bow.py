@@ -1,3 +1,5 @@
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
 corpus = ["我 来到 北京 清华大学",
           "他 来到 了 网易 杭研 大厦",
           "小明 硕士 毕业 与 中国 科学院",
@@ -28,4 +30,9 @@ for x in word_list:
                 bow_list[j][i] = bow_list[j][i] + 1
         j = j + 1
     i = i + 1
-print('final_result', bow_list)
+print('my_bow', bow_list)
+
+# sklearn实现
+vectorizer = CountVectorizer(max_features=10)
+sklearn_bow = vectorizer.fit_transform(corpus)
+print("sklearn_bow\n", vectorizer.get_feature_names(), '\n', sklearn_bow.toarray())
