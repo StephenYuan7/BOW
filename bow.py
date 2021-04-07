@@ -1,5 +1,6 @@
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
+import math
 corpus = ["我 来到 北京 清华大学",
           "他 来到 了 网易 杭研 大厦",
           "小明 硕士 毕业 与 中国 科学院",
@@ -12,9 +13,9 @@ for line in corpus:
     word_list.extend(line.split())
     corpus_split.append(line.split())
 # 去重
-word_list_temp = word_list
+word_list_total = word_list
 word_list = list(set(word_list))
-word_list.sort(key=word_list_temp.index)
+word_list.sort(key=word_list_total.index)
 print(word_list)
 print(corpus_split)
 
@@ -36,3 +37,16 @@ print('my_bow', bow_list)
 vectorizer = CountVectorizer(max_features=10)
 sklearn_bow = vectorizer.fit_transform(corpus)
 print("sklearn_bow\n", vectorizer.get_feature_names(), '\n', sklearn_bow.toarray())
+
+
+# 下面实现tfidf
+# 先计算IDF
+word_count_dict = {}
+for key in word_list_total:
+    word_count_dict[key] = word_count_dict.get(key, 0) + 1
+print(word_count_dict)
+word_count_idf = {}
+for key in word_count_dict:
+    word_count_idf[key] = math.log10(len(corpus)/word_count_dict[key])
+print(word_count_idf)
+
