@@ -4,11 +4,14 @@ corpus = ["我 来到 北京 清华大学",
           "我 爱 北京 天安门"]
 
 word_list = []
+corpus_split = []
 # 分割元素
 for line in corpus:
     word_list.extend(line.split())
+    corpus_split.append(line.split())
 # 去重
 word_list_temp = word_list
 word_list = list(set(word_list))
 word_list.sort(key=word_list_temp.index)
 print(word_list)
+print(corpus_split)
