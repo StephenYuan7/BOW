@@ -1,5 +1,5 @@
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer
 import math
 corpus = ["我 来到 北京 清华大学",
           "他 来到 了 网易 杭研 大厦",
@@ -47,7 +47,7 @@ for key in word_list_total:
 print(word_count_dict)
 word_count_idf = {}
 for key in word_count_dict:
-    word_count_idf[key] = math.log10(len(corpus)/word_count_dict[key])
+    word_count_idf[key] = math.log((len(corpus) + 1)/(word_count_dict[key] + 1)) + 1
 print(word_count_idf)
 print('my_tfidf:')
 
@@ -59,3 +59,9 @@ for x in corpus_split:
     for key in count_dict:
         word_tfidf[key] = count_dict[key] * word_count_idf[key]
     print(word_tfidf)
+
+# 下面用sklearn实现
+
+tf_idf_vectorizer = TfidfVectorizer(norm=None, token_pattern=r"(?u)\b\w+\b", smooth_idf=True)
+tf_idf = tf_idf_vectorizer.fit_transform(corpus)
+print('sklearn:\n', tf_idf_vectorizer.get_feature_names(), tf_idf.toarray())
